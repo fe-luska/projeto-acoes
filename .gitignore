@@ -1,0 +1,18 @@
+# Arquivo de configuração local com segredos
+.env
+
+# Arquivos e pastas do Maven
+/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+
+# Arquivos e pastas do Eclipse
+.project
+.classpath
+.settings/
+
+# Arquivos de log e temporários
+*.log
+*.tmp
