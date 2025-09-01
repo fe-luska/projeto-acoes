@@ -1,19 +1,17 @@
-import java.io.IOException;
 import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.mail.MessagingException;
 
 public class Main {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) { 
 		
 		try {
 			
 			Dotenv dotenv = Dotenv.load();
-			FinnhubClient client = new FinnhubClient(dotenv.get("FINNHUB_API_KEY"));
+			FinnhubClient ativosClient = new FinnhubClient(dotenv.get("FINNHUB_API_KEY"));
 			
-			Acao acao;
-			acao = client.buscarCotacao("AAPL");
-			System.out.println(acao.toString());
+//			Acao acao;
+//			acao = ativosClient.buscarCotacao("AAPL");
+//			System.out.println(acao.toString());
 		
 	        EmailClient emailClient = new EmailClient(
 	            dotenv.get("EMAIL_HOST"),
@@ -22,25 +20,51 @@ public class Main {
 	            dotenv.get("EMAIL_PASSWORD")
 	        );
 	        
-	        // Monta o corpo do e-mail com os dados da ação
-	        String assunto = "Teste assunto ";
-	        String corpoDoEmail = "Olá!\n\n"
-	                            + acao.toString();
-	
-	        // Envia o e-mail
-	        emailClient.enviarEmail(dotenv.get("EMAIL_DESTINO"), assunto, corpoDoEmail);
+	        MonitorService monitorService = new MonitorService(ativosClient, emailClient, dotenv.get("EMAIL_DESTINO"));
+	        
+	        AlertaPreco alerta = new AlertaPreco(args[0], Double.parseDouble(args[1]),
+	        									Double.parseDouble(args[2]));
+	        
+	        monitorService.setAlerta(alerta);
+	        monitorService.iniciarMonitoramento();
+	        
 		
-		} catch (IOException | InterruptedException e) {
-			System.out.print(e.getMessage());
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			System.out.print("Erro ao enviar email");
+		} catch (Exception e) {
 			System.out.print(e.getMessage());
 			e.printStackTrace();
 		}
 		
 		return;
 		
+	}
+	
+	public void verificarArgumentos(String[] args) {
+		if (args.length <= 2) {
+            System.err.println("Erro: Argumentos não fornecidos ou insuficientes.");
+            System.out.println("Uso: java Main <ativo> <preco de venda> <preco de compra>");
+            return;
+            
+		} else if (args.length > 3) {
+			System.err.println("Erro: Argumentos demais.");
+            System.out.println("Uso: java Main <ativo> <preco de venda> <preco de compra>");
+            
+        } else if (!isDouble(args[1]) | !isDouble(args[2])) {
+        	System.err.println("Erro na formatação dos valores, use '.' (ponto) como separador decimal");
+        	return;
+        }
+	}
+	
+	// Função auxiliar para verificar se o numero entrado está correto
+	private static boolean isDouble(String texto) {
+	    if (texto == null || texto.trim().isEmpty()) {
+	        return false;
+	    }
+	    try {
+	        Double.parseDouble(texto);
+	        return true;
+	    } catch (NumberFormatException e) {
+	        return false;
+	    }
 	}
 
 }

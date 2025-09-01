@@ -52,4 +52,28 @@ public class EmailClient {
         
         System.out.println("E-mail enviado!");
     }
+    
+    public void enviarEmailAlerta(AlertaPreco alerta, Acao acao, String emailDestinatario,
+    							String compraOuVenda) {
+    	try {
+    		
+    		// precoAlvo é o preco de compra ou venda do alerta
+    		double precoAlvo = compraOuVenda == "compra" ? alerta.getPrecoCompra() : alerta.getPrecoVenda();
+    		
+            String assunto = "[AtivosBot] Alerta de Preço para "+ compraOuVenda + " Atingido - " + acao.getSimbolo();
+            String corpo = String.format(
+                "Olá!\n\nSeu alerta de "+ compraOuVenda +" para o ativo" + acao.getSimbolo() + "foi atingido.\n\n" +
+                "Condição para a "+ compraOuVenda +" : %s de R$%.2f\n" +
+                "Preço Atual: R$%.2f\n\n",
+                precoAlvo,
+                acao.getPreco()
+            );
+            this.enviarEmail(emailDestinatario, assunto, corpo);
+            
+        } catch (Exception e) {
+        	// TO-DO adicionar novas tentativas de envio de email
+            System.err.println("Falha ao enviar e-mail de notificação: " + e.getMessage());
+        }
+    }
+    
 }
