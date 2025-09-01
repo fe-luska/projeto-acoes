@@ -1,3 +1,5 @@
+package projetoAcoes.model;
+
 public class AlertaPreco {
 
     private final String ativo;

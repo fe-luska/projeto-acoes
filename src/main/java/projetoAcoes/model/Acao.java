@@ -1,3 +1,5 @@
+package projetoAcoes.model;
+
 public class Acao {
     private String simbolo;
     private double preco;

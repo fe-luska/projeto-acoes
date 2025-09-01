@@ -1,8 +1,16 @@
+package projetoAcoes;
+
 import io.github.cdimascio.dotenv.Dotenv;
+import projetoAcoes.client.EmailClient;
+import projetoAcoes.client.FinnhubClient;
+import projetoAcoes.model.AlertaPreco;
+import projetoAcoes.service.MonitorService;
 
 public class Main {
 	
 	public static void main(String[] args) { 
+		
+		verificarArgumentos(args);
 		
 		try {
 			
@@ -38,7 +46,7 @@ public class Main {
 		
 	}
 	
-	public void verificarArgumentos(String[] args) {
+	public static void verificarArgumentos(String[] args) {
 		if (args.length <= 2) {
             System.err.println("Erro: Argumentos não fornecidos ou insuficientes.");
             System.out.println("Uso: java Main <ativo> <preco de venda> <preco de compra>");

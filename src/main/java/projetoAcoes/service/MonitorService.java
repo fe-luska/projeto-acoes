@@ -1,6 +1,13 @@
+package projetoAcoes.service;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import projetoAcoes.client.EmailClient;
+import projetoAcoes.client.FinnhubClient;
+import projetoAcoes.model.Acao;
+import projetoAcoes.model.AlertaPreco;
 
 public class MonitorService {
 
