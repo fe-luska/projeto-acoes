@@ -19,12 +19,15 @@ public class EmailClient {
     private final String port;
     private final String username;
     private final String password;
+    private int emailsEnviados;
+    private String ultimoAssunto;
 
     public EmailClient(String host, String port, String username, String password) {
         this.host = host;
         this.port = port;
         this.username = username;
         this.password = password;
+        this.emailsEnviados = 0;
     }
 
     public void enviarEmail(String destinatario, String assunto, String corpo) throws MessagingException {
@@ -54,6 +57,8 @@ public class EmailClient {
         
         // Enviar a mensagem
         Transport.send(message);
+        this.emailsEnviados++;
+        this.ultimoAssunto = assunto;
         
         System.out.println("E-mail enviado!");
     }
@@ -65,10 +70,10 @@ public class EmailClient {
     		// precoAlvo é o preco de compra ou venda do alerta
     		double precoAlvo = compraOuVenda == "compra" ? alerta.getPrecoCompra() : alerta.getPrecoVenda();
     		
-            String assunto = "[AtivosBot] Alerta de Preço para "+ compraOuVenda + " Atingido - " + acao.getSimbolo();
+            String assunto = "Alerta de Preço para "+ compraOuVenda + " atingido - " + acao.getSimbolo();
             String corpo = String.format(
-                "Olá!\n\nSeu alerta de "+ compraOuVenda +" para o ativo" + acao.getSimbolo() + "foi atingido.\n\n" +
-                "Condição para a "+ compraOuVenda +" : %s de R$%.2f\n" +
+                "Olá!\n\nSeu alerta de "+ compraOuVenda +" para o ativo " + acao.getSimbolo() + " foi atingido.\n\n" +
+                "Condição para a "+ compraOuVenda +": de R$%.2f\n" +
                 "Preço Atual: R$%.2f\n\n",
                 precoAlvo,
                 acao.getPreco()
@@ -79,6 +84,14 @@ public class EmailClient {
         	// TO-DO adicionar novas tentativas de envio de email
             System.err.println("Falha ao enviar e-mail de notificação: " + e.getMessage());
         }
+    }
+    
+    public int getEmailsEnviados() {
+        return this.emailsEnviados;
+    }
+
+    public String getUltimoAssunto() {
+        return this.ultimoAssunto;
     }
     
 }

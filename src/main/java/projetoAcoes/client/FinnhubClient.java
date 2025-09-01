@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 
 import projetoAcoes.model.Acao;
 
-public class FinnhubClient {
+public class FinnhubClient implements ApiClient{
 
 	private final String APIKey;
 	private final String BaseURL = "https://finnhub.io/api/v1";
@@ -32,6 +32,7 @@ public class FinnhubClient {
      * @throws IOException
      * @throws InterruptedException
      */
+    @Override
     public Acao buscarCotacao(String acao) throws IOException, InterruptedException {
         // 1. Monta a URL específica para a Finnhub
         String url = String.format("%s/quote?symbol=%s&token=%s",
