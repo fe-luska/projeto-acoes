@@ -4,8 +4,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import projetoAcoes.client.ApiClient;
 import projetoAcoes.client.EmailClient;
-import projetoAcoes.client.FinnhubClient;
 import projetoAcoes.model.Acao;
 import projetoAcoes.model.AlertaPreco;
 
@@ -15,14 +15,14 @@ public class MonitorService {
 	
     private AlertaPreco alerta;
     
-    private final FinnhubClient apiClient;
+    private final ApiClient apiClient;
     private final EmailClient emailClient;
     private final String emailDestinatario;
 
     // O agendador que executará a verificação periodicamente
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-    public MonitorService(FinnhubClient apiClient, EmailClient emailClient, String emailDestinatario) {
+    public MonitorService(ApiClient apiClient, EmailClient emailClient, String emailDestinatario) {
         this.apiClient = apiClient;
         this.emailClient = emailClient;
         this.emailDestinatario = emailDestinatario;
@@ -52,7 +52,7 @@ public class MonitorService {
      * Função que é executada pelo scheduler no intervalo de tempo definido.
      * Verifica se o preço de compra ou venda foi atingido.
      */
-    private void verificarAlerta() {
+    public void verificarAlerta() {
 
 		try {
 			// Busca o preço atual do ativo
