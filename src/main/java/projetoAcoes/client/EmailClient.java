@@ -55,12 +55,21 @@ public class EmailClient {
 
         System.out.println("Enviando e-mail para " + destinatario);
         
-        // Enviar a mensagem
-        Transport.send(message);
-        this.emailsEnviados++;
-        this.ultimoAssunto = assunto;
-        
-        System.out.println("E-mail enviado!");
+     // Faz 3 tentativas de enviar o email
+        for (int i = 0; i < 3; i++) {
+	        try {
+				// Enviar a mensagem
+				Transport.send(message);
+				this.emailsEnviados++;
+		        this.ultimoAssunto = assunto;
+		        
+				System.out.println("E-mail enviado!"); // sucesso
+				return;
+			} catch (MessagingException e) {
+				// falha
+				System.err.println("Falha ao enviar email, tentando novamente...");
+	        }
+        }
     }
     
     public void enviarEmailAlerta(AlertaPreco alerta, Acao acao, String emailDestinatario,
