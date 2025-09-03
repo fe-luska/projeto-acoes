@@ -2,7 +2,7 @@ package projetoAcoes;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import projetoAcoes.client.EmailClient;
-import projetoAcoes.client.FinnhubClient;
+import projetoAcoes.client.IbovFinancialsClient;
 import projetoAcoes.model.AlertaPreco;
 import projetoAcoes.service.MonitorService;
 
@@ -15,11 +15,8 @@ public class Main {
 		try {
 			
 			Dotenv dotenv = Dotenv.load();
-			FinnhubClient ativosClient = new FinnhubClient(dotenv.get("FINNHUB_API_KEY"));
-			
-//			Acao acao;
-//			acao = ativosClient.buscarCotacao("AAPL");
-//			System.out.println(acao.toString());
+			IbovFinancialsClient apiClient = new IbovFinancialsClient(dotenv.get("IBOV_FINANCIALS_TOKEN"));
+
 		
 	        EmailClient emailClient = new EmailClient(
 	            dotenv.get("EMAIL_HOST"),
@@ -28,7 +25,7 @@ public class Main {
 	            dotenv.get("EMAIL_PASSWORD")
 	        );
 	        
-	        MonitorService monitorService = new MonitorService(ativosClient, emailClient, dotenv.get("EMAIL_DESTINO"));
+	        MonitorService monitorService = new MonitorService(apiClient, emailClient, dotenv.get("EMAIL_DESTINO"));
 	        
 	        AlertaPreco alerta = new AlertaPreco(args[0], Double.parseDouble(args[1]),
 	        									Double.parseDouble(args[2]));
