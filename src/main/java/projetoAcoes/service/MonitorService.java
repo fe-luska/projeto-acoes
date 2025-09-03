@@ -11,7 +11,8 @@ import projetoAcoes.model.AlertaPreco;
 
 public class MonitorService {
 
-	private final long intervaloMonitoramentoSegundos = 10;
+	// de quanto em quanto tempo os dados da ação serão atualizados
+	private final long intervaloMonitoramentoSegundos = 20;
 	
     private AlertaPreco alerta;
     

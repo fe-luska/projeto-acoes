@@ -14,10 +14,13 @@ public class Main {
 		
 		try {
 			
+			// carrega as variaveis do arquivo .env
 			Dotenv dotenv = Dotenv.load();
+			
+			// cliente dos dados da B3
 			IbovFinancialsClient apiClient = new IbovFinancialsClient(dotenv.get("IBOV_FINANCIALS_TOKEN"));
-
 		
+			// cliente de email
 	        EmailClient emailClient = new EmailClient(
 	            dotenv.get("EMAIL_HOST"),
 	            dotenv.get("EMAIL_PORT"),
@@ -25,8 +28,10 @@ public class Main {
 	            dotenv.get("EMAIL_PASSWORD")
 	        );
 	        
+	        // serviço que fará o monitoramento do ativo
 	        MonitorService monitorService = new MonitorService(apiClient, emailClient, dotenv.get("EMAIL_DESTINO"));
 	        
+	        // alerta que será passado para o monitorService
 	        AlertaPreco alerta = new AlertaPreco(args[0], Double.parseDouble(args[1]),
 	        									Double.parseDouble(args[2]));
 	        
@@ -43,6 +48,10 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Verifica os argumentos da entrada para ver se condizem com o esperado
+	 * @param args
+	 */
 	public static void verificarArgumentos(String[] args) {
 		if (args.length <= 2) {
             System.err.println("Erro: Argumentos não fornecidos ou insuficientes.");

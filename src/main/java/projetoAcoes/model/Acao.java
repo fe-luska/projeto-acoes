@@ -5,14 +5,12 @@ public class Acao {
     private double preco;
     private String variacaoPercentual;
 
-    // Construtor
     public Acao(String simbolo, double preco, String variacaoPercentual) {
         this.simbolo = simbolo;
         this.preco = preco;
         this.variacaoPercentual = variacaoPercentual;
     }
 
-    // Getters e Setters (pode gerar no Eclipse: Source > Generate Getters and Setters)
     public String getSimbolo() { return simbolo; }
     public double getPreco() { return preco; }
     public String getVariacaoPercentual() { return variacaoPercentual; }
