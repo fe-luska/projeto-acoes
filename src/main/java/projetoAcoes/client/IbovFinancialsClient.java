@@ -62,7 +62,7 @@ public class IbovFinancialsClient implements ApiClient {
         // monta a Acao
         double preco = ativoObject.get("last").getAsDouble();
         double variacaoDecimal = ativoObject.get("price_change").getAsDouble();
-        String variacaoFormatada = String.format("%.2f%%", variacaoDecimal * 100);
+        String variacaoFormatada = String.format("%.2f%%", variacaoDecimal);
 
         return new Acao(simbolo, preco, variacaoFormatada);
     }

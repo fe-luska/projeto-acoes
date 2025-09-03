@@ -23,4 +23,14 @@ public class AlertaPreco {
     public double getPrecoVenda() {
         return this.precoVenda;
     }
+    
+    @Override
+    public String toString() {
+        return String.format(
+            "Alerta [Ativo=%s, Alvo de Venda > R$ %.2f, Alvo de Compra < R$ %.2f]",
+            this.ativo,
+            this.precoVenda,
+            this.precoCompra
+        );
+    }
 }
