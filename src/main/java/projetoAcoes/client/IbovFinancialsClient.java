@@ -10,6 +10,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import projetoAcoes.model.Acao;
 
+/**
+ * Cliente que gerenciará as requisições para o IbovFinancials
+ */
 public class IbovFinancialsClient implements ApiClient {
 
     private final String apiToken;

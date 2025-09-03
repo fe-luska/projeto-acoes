@@ -13,6 +13,10 @@ import jakarta.mail.internet.MimeMessage;
 import projetoAcoes.model.Acao;
 import projetoAcoes.model.AlertaPreco;
 
+/**
+ * Cliente de email, utilizando jakartaMail. O destinatário dos emails está no arquivo .env
+ * com a chave "EMAIL_DESTINO"
+ */
 public class EmailClient {
 
     private final String host;
@@ -30,6 +34,14 @@ public class EmailClient {
         this.emailsEnviados = 0;
     }
 
+    /**
+     * Função genérica de enviar um email com um texto e assunto qualquer. Cria uma sessão
+     * e faz 3 tentativas de enviar o email.
+     * @param destinatario 
+     * @param assunto
+     * @param corpo
+     * @throws MessagingException
+     */
     public void enviarEmail(String destinatario, String assunto, String corpo) throws MessagingException {
         // Propriedades do servidor de email
         Properties props = new Properties();
@@ -72,6 +84,14 @@ public class EmailClient {
         }
     }
     
+    /**
+     * Envia o email de alerta com um assunto e um corpo de mensagem informativos.
+     * Faz 3 tentativas.
+     * @param alerta
+     * @param acao
+     * @param emailDestinatario
+     * @param compraOuVenda
+     */
     public void enviarEmailAlerta(AlertaPreco alerta, Acao acao, String emailDestinatario,
     							String compraOuVenda) {
     	try {
@@ -95,10 +115,18 @@ public class EmailClient {
         }
     }
     
+    /**
+     * Conta o número de emails enviados. Está aqui por razões de debug
+     * @return
+     */
     public int getEmailsEnviados() {
         return this.emailsEnviados;
     }
 
+    /**
+     * retorna o ultimo assunto, está aqui para debugar também
+     * @return
+     */
     public String getUltimoAssunto() {
         return this.ultimoAssunto;
     }

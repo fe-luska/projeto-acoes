@@ -11,6 +11,9 @@ import com.google.gson.JsonObject;
 
 import projetoAcoes.model.Acao;
 
+/**
+ * Essa classe não é utilizada na versão final da aplicação
+ */
 public class FinnhubClient implements ApiClient{
 
 	private final String APIKey;
