@@ -48,11 +48,14 @@ Use o Maven para compilar o código e criar um arquivo `.jar` executável.
 ```sh
 mvn clean package
 ```
+**Atenção**: o projeto não vai compilar sem o .env pois não passará nos testes!
 
-Isso criará um arquivo na pasta `target/` com um nome como `ProjetoAcoes-0.0.1-SNAPSHOT.jar`.
+Isso criará um arquivo na pasta `target/` com um nome como `ProjetoAcoes-0.0.1-SNAPSHOT-jar-with-dependencies.jar`.
 Os testes serão executados e dois emails devem ter sido enviados no email destinatário.
 
 #### 3. Execute
+
+Execute o arquivo .jar gerado com as dependencias.
 
 ```
 java -jar <arquivo.jar> <ativo> <preço_venda> <preço_compra>
