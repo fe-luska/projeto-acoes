@@ -11,7 +11,7 @@ import projetoAcoes.model.AlertaPreco;
 
 public class MonitorService {
 
-	private final long intervaloMonitoramentoSegundos = 5;
+	private final long intervaloMonitoramentoSegundos = 10;
 	
     private AlertaPreco alerta;
     
